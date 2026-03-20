@@ -3,7 +3,7 @@
 ## Product: LINE Official Account Management MCP Server
 ## Codename: `linewhiz`
 ## Version: 1.0 MVP Spec
-## Target Market: ธุรกิจไทย/SEA ที่ใช้ LINE Official Account
+## Target Market: Global — LINE OA users in Japan, Thailand, Taiwan, Indonesia
 
 ---
 
@@ -16,9 +16,9 @@
 MCP Server ที่ให้ AI agents (Claude, ChatGPT, Cursor, Antigravity) จัดการ LINE OA ได้ทั้งหมดผ่านคำสั่งภาษาธรรมชาติ — broadcast ข้อความ, จัดการ rich menu, ดู analytics, ตอบลูกค้าอัตโนมัติ
 
 ### Revenue Target
-- Month 1-3: ฿15,000-50,000/เดือน (30-100 users @ ฿500/mo)
-- Month 6-12: ฿100,000-300,000/เดือน (200-600 users)
-- Year 2+: ฿500,000+/เดือน (scaling + enterprise tier)
+- Month 1-3: $100-500/month (10-30 paying users @ $15/mo)
+- Month 6-12: $1,000-5,000/month (70-300 paying users)
+- Year 2+: $5,000-15,000/month (scaling + enterprise)
 
 ---
 
@@ -98,7 +98,7 @@ async def get_message_quota() -> str:
 
 ---
 
-### Tier: PRO ฿500/เดือน (core value)
+### Tier: PRO $15/month (core value)
 
 #### Tool 4: `send_broadcast`
 ```python
@@ -266,7 +266,7 @@ async def link_rich_menu_to_user(
 
 ---
 
-### Tier: BUSINESS ฿1,500/เดือน (advanced automation)
+### Tier: BUSINESS $45/month (advanced automation)
 
 #### Tool 14: `create_flex_message`
 ```python
@@ -503,14 +503,14 @@ TIER_FEATURES = {
 - No messaging capabilities
 - **Purpose**: ดึงคนเข้ามาทดลอง
 
-### Pro Tier — ฿500/เดือน (~$15 USD)
+### Pro Tier — $15/month
 - 13 tools (all messaging + rich menu + insights)
 - 5,000 API calls/day
 - 10 broadcasts/day
 - Email support
 - **Target**: SME, ร้านค้าออนไลน์, คลินิก, ร้านอาหาร
 
-### Business Tier — ฿1,500/เดือน (~$45 USD)
+### Business Tier — $45/month
 - All 18 tools
 - Unlimited API calls
 - Unlimited broadcasts
@@ -577,22 +577,25 @@ TIER_FEATURES = {
 
 ## 9. Distribution Channels
 
-### Primary (MCP Marketplaces)
+### Primary (Global)
 1. **Apify Store** — pay-per-event model, 36K+ dev community
 2. **MCPize** — subscription model, 85% revenue share
 3. **MCP.so** — listing for visibility (18K+ servers)
 4. **LobeHub MCP Marketplace** — growing community
+5. **GitHub** — open-source free tier for trust/SEO
+6. **npm / PyPI** — easy installation
 
-### Secondary (Direct)
-5. **Own website** (linewhiz.com) — 100% revenue
-6. **GitHub** — open-source free tier for trust/SEO
-7. **npm / PyPI** — easy installation
+### Secondary (Community)
+7. **Reddit** (r/SaaS, r/MCP) — developer community
+8. **Indie Hackers** — bootstrapper community
+9. **Hacker News** (Show HN) — tech community
+10. **Product Hunt** — launch day visibility
 
-### Thai Market Specific
-8. **Thai Programmer Facebook Group** (200K+ members)
-9. **LINE Developers Thailand Community**
-10. **Pantip (Technopolis forum)**
-11. **Thai startup/SME communities**
+### Tertiary (Thai/Local)
+11. **Thai Programmer Facebook Group** (200K+ members)
+12. **Pantip (Technopolis forum)**
+13. **LINE Developers Thailand Community**
+14. **Own website** (linewhiz.com) — 100% revenue
 
 ---
 

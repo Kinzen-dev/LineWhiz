@@ -1,17 +1,18 @@
 [project]
 name = "linewhiz"
 version = "0.1.0"
-description = "AI-powered LINE Official Account management via MCP"
+description = "Premium MCP server for AI-powered LINE Official Account management"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"
-keywords = ["mcp", "line", "chatbot", "ai", "automation"]
+keywords = ["mcp", "line", "chatbot", "ai", "automation", "line-official-account"]
 
 dependencies = [
     "mcp>=1.2.0",
     "httpx>=0.27.0",
     "line-bot-sdk>=3.0.0",
     "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
     "aiosqlite>=0.20.0",
     "python-dotenv>=1.0.0",
 ]
@@ -24,12 +25,19 @@ dev = [
     "ruff>=0.3.0",
 ]
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py311"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "W"]
+select = ["E", "F", "I", "N", "W", "UP", "PLW"]
 
 [tool.mypy]
 python_version = "3.11"

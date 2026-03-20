@@ -77,7 +77,7 @@ PROMPT:
 ออกแบบ hero section ที่แสดง:
 - หน้าจอ Claude Desktop กำลังสั่ง broadcast ข้อความ LINE
 - Dashboard แสดง analytics
-- สไตล์ modern, สี green (LINE) + dark
+- Style: modern, LINE green (#06C755) + dark theme. Text in English.
 ทำ 2 แบบ: แบบ minimal และแบบ feature-rich"
 ```
 **Output ที่ได้**: 2 mockup images
@@ -86,7 +86,7 @@ PROMPT:
 ### 1.4 🧑 Validate demand (คุณทำเอง)
 - สร้าง landing page ง่ายๆ (ใช้ Carrd.co หรือ Framer)
 - ใส่ mockup + รายละเอียด + ปุ่ม "สนใจ ลงชื่อรอ"
-- โพสต์ใน Thai Programmer FB Group, LINE Developer TH
+- Post on Reddit r/mcp, Indie Hackers, HN Show + Thai Programmer FB, LINE Dev TH
 - **เป้าหมาย: 20+ signups ใน 1 สัปดาห์ = ไฟเขียวไปต่อ**
 
 ---
@@ -317,7 +317,7 @@ Sections:
 7. FAQ: 5 คำถาม
 8. Footer: links + contact
 
-ภาษาไทย เป็นหลัก + English toggle
+English primary + Thai/Japanese toggle for local markets
 สี: LINE Green (#06C755) + dark theme
 Deploy to Vercel"
 ```
@@ -341,7 +341,7 @@ PROMPT (ChatGPT):
 ```
 PROMPT:
 "เขียน content สำหรับ launch:
-1. Blog post: 'ทำไม LINE OA ของคุณต้องการ AI' (800 คำ, Thai)
+1. Blog post: 'Why Your LINE OA Needs an AI Copilot' (800 words, English)
 2. Facebook post ประกาศ launch (3 versions: short/medium/long)
 3. Email template สำหรับ waitlist users
 4. README.md สำหรับ GitHub (English, developer-focused)
@@ -397,12 +397,12 @@ PROMPT:
 - [ ] PyPI publish (ถ้าเป็น Python)
 
 ### 6.3 🧑 Community Launch (คุณทำเอง)
-- [ ] โพสต์ Thai Programmer FB Group
-- [ ] โพสต์ Pantip Technopolis
-- [ ] โพสต์ LINE Developers Thailand
 - [ ] โพสต์ Reddit r/SaaS + r/MCP
 - [ ] โพสต์ Indie Hackers
 - [ ] โพสต์ Product Hunt (schedule launch day)
+- [ ] โพสต์ Thai Programmer FB Group
+- [ ] โพสต์ Pantip Technopolis
+- [ ] โพสต์ LINE Developers Thailand
 
 ---
 
@@ -415,7 +415,7 @@ PROMPT:
 | จันทร์ | Review metrics | Cowork (auto) | สรุป signups, revenue, usage |
 | อังคาร | Customer support | Claude Chat | ตอบ questions จาก users |
 | พุธ | Bug fixes | Cursor | แก้ bugs เล็กๆ ที่ report เข้ามา |
-| พฤหัสบดี | Content | ChatGPT + Claude | สร้าง social post + blog |
+| พฤหัสบดี | Content | ChatGPT + Claude | Create social posts + blog (English primary) |
 | ศุกร์ | Planning | Claude Chat | Plan next feature/improvement |
 
 ### Monthly Routine (2 ชั่วโมง/เดือน)

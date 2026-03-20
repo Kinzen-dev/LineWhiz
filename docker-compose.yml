@@ -1,0 +1,24 @@
+# ============================================
+# LineWhiz MCP Server — Docker Compose
+# ============================================
+# Local development setup
+# Usage: docker compose up --build
+# ============================================
+
+services:
+  linewhiz:
+    build: .
+    container_name: linewhiz-mcp
+    env_file:
+      - .env
+    volumes:
+      - linewhiz-data:/app/data
+    environment:
+      - LINEWHIZ_DATABASE_URL=sqlite:///data/linewhiz.db
+    stdin_open: true  # Required for MCP STDIO transport
+    tty: true
+    restart: unless-stopped
+
+volumes:
+  linewhiz-data:
+    driver: local
