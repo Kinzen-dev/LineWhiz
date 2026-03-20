@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "MCP Server (STDIO)",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "server.py"],
+      "port": 0
+    },
+    {
+      "name": "MCP Inspector",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["@modelcontextprotocol/inspector", "uv", "run", "server.py"],
+      "port": 5173
+    }
+  ]
+}
