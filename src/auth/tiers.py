@@ -34,6 +34,7 @@ TIERS: dict[str, dict[str, Any]] = {
             "get_message_stats",
             "get_user_profile",
             "list_rich_menus",
+            "get_followers",
             "create_rich_menu",
             "set_default_rich_menu",
             "link_rich_menu_to_user",

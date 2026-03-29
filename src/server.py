@@ -157,6 +157,23 @@ TOOL_DEFINITIONS: list[Tool] = [
         description="List all rich menus created for this LINE OA.",
         inputSchema={"type": "object", "properties": {}, "required": []},
     ),
+    # --- Account (Pro) ---
+    Tool(
+        name="get_followers",
+        description=(
+            "Get the list of user IDs of followers of this LINE OA. "
+            "Use this to find user IDs for send_push_message or get_user_profile."
+        ),
+        inputSchema={
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "description": "Max number of user IDs to return (default 300, max 1000)",
+                }
+            },
+        },
+    ),
 ]
 
 
@@ -232,6 +249,8 @@ async def _dispatch_tool(name: str, args: dict) -> str:  # type: ignore[type-arg
             return await insights.get_user_profile(client, args["user_id"])
         case "list_rich_menus":
             return await richmenu.list_rich_menus(client)
+        case "get_followers":
+            return await account.get_followers(client, args.get("limit"))
 
         case _:
             return f"Unknown tool: {name}"
