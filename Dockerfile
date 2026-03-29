@@ -44,7 +44,7 @@ COPY --from=base /app /app
 # Create non-root user + data directory
 RUN useradd --create-home --shell /bin/bash linewhiz \
     && mkdir -p /app/data \
-    && chown -R linewhiz:linewhiz /app/data
+    && chown -R linewhiz:linewhiz /app
 
 USER linewhiz
 
