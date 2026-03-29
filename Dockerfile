@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # Copy project files
-COPY pyproject.toml ./
+COPY pyproject.toml README.md ./
 COPY src/ ./src/
 
 # Install dependencies (production only)
@@ -37,7 +37,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl \
 
 WORKDIR /app
 
-# Copy installed packages and project from build stage
+# Copy uv + installed packages and project from build stage
+COPY --from=base /usr/local/bin/uv /usr/local/bin/uv
 COPY --from=base /app /app
 
 # Create non-root user + data directory
