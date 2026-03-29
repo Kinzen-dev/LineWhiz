@@ -2,12 +2,11 @@
 # LineWhiz MCP Server — Dockerfile
 # ============================================
 # Multi-stage build: Python 3.11 + uv
-# Deploy target: Railway.app
+# Deploy target: Railway.app (SSE transport)
 # ============================================
 
 FROM python:3.11-slim AS base
 
-# Prevent Python from writing .pyc files and enable unbuffered output
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
@@ -20,7 +19,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 COPY pyproject.toml ./
 COPY src/ ./src/
 
-# Install dependencies
+# Install dependencies (production only)
 RUN uv sync --no-dev --no-editable
 
 # ─── Production stage ────────────────────────────────────────────────────────
@@ -28,16 +27,29 @@ RUN uv sync --no-dev --no-editable
 FROM python:3.11-slim AS production
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    LINEWHIZ_TRANSPORT=sse \
+    LINEWHIZ_DATABASE_URL=sqlite:///data/linewhiz.db
+
+# Install curl for health checks
+RUN apt-get update && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 # Copy installed packages and project from build stage
 COPY --from=base /app /app
 
-# Create non-root user
-RUN useradd --create-home --shell /bin/bash linewhiz
+# Create non-root user + data directory
+RUN useradd --create-home --shell /bin/bash linewhiz \
+    && mkdir -p /app/data \
+    && chown -R linewhiz:linewhiz /app/data
+
 USER linewhiz
 
-# Default command — run MCP server via STDIO
-CMD ["uv", "run", "python", "-m", "src.server"]
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["uv", "run", "linewhiz"]

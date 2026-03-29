@@ -15,7 +15,13 @@ dependencies = [
     "pydantic-settings>=2.0.0",
     "aiosqlite>=0.20.0",
     "python-dotenv>=1.0.0",
+    "uvicorn>=0.30.0",
+    "starlette>=0.37.0",
+    "sse-starlette>=2.0.0",
 ]
+
+[project.scripts]
+linewhiz = "src.server:cli_main"
 
 [project.optional-dependencies]
 dev = [

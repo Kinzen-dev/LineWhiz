@@ -11,9 +11,7 @@ from tests.conftest import MockLineAPIClient
 
 
 @pytest.mark.asyncio
-async def test_get_account_info(
-    mock_client: MockLineAPIClient, sample_account_info: dict
-) -> None:
+async def test_get_account_info(mock_client: MockLineAPIClient, sample_account_info: dict) -> None:
     """Test get_account_info returns formatted account data."""
     mock_client.get.return_value = sample_account_info
 

@@ -1,11 +1,13 @@
 """SQLite async database initialization and migrations.
 
 Uses aiosqlite for async access. Schema matches CLAUDE.md spec.
+Auto-creates tables on first run. WAL mode for concurrent reads.
 """
 
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 
 import aiosqlite
 
@@ -41,22 +43,50 @@ CREATE INDEX IF NOT EXISTS idx_usage_api_date ON usage_logs(api_key_id, called_a
 """
 
 
-async def get_db() -> aiosqlite.Connection:
-    """Get or create the database connection."""
+def _resolve_db_path(url: str) -> str:
+    """Extract filesystem path from sqlite:///path and ensure parent dir exists."""
+    db_path = url.replace("sqlite:///", "")
+    parent = Path(db_path).parent
+    if str(parent) != ".":
+        parent.mkdir(parents=True, exist_ok=True)
+    return db_path
+
+
+async def init_db() -> aiosqlite.Connection:
+    """Initialize the database: create tables, enable WAL mode.
+
+    Safe to call multiple times — uses CREATE IF NOT EXISTS.
+    Called automatically on server startup.
+    """
     global _db  # noqa: PLW0603
+    if _db is not None:
+        return _db
+
+    settings = get_settings()
+    db_path = _resolve_db_path(settings.linewhiz_database_url)
+
+    _db = await aiosqlite.connect(db_path)
+    _db.row_factory = aiosqlite.Row
+
+    # WAL mode: allows concurrent reads while writing
+    await _db.execute("PRAGMA journal_mode=WAL")
+    # Enforce foreign keys
+    await _db.execute("PRAGMA foreign_keys=ON")
+
+    await _db.executescript(SQL_SCHEMA)
+    logger.info("Database initialized at %s", db_path)
+    return _db
+
+
+async def get_db() -> aiosqlite.Connection:
+    """Get the database connection, initializing if needed."""
     if _db is None:
-        settings = get_settings()
-        # Extract path from sqlite:///path format
-        db_path = settings.linewhiz_database_url.replace("sqlite:///", "")
-        _db = await aiosqlite.connect(db_path)
-        _db.row_factory = aiosqlite.Row
-        await _db.executescript(SQL_SCHEMA)
-        logger.info("Database initialized at %s", db_path)
+        return await init_db()
     return _db
 
 
 async def close_db() -> None:
-    """Close the database connection."""
+    """Close the database connection gracefully."""
     global _db  # noqa: PLW0603
     if _db is not None:
         await _db.close()

@@ -75,9 +75,7 @@ async def send_push_message(client: LineAPIClient, user_id: str, message: str) -
     return f"Push message sent to {user_id}. Message: '{message[:50]}...'"
 
 
-async def send_multicast(
-    client: LineAPIClient, user_ids: list[str], message: str
-) -> str:
+async def send_multicast(client: LineAPIClient, user_ids: list[str], message: str) -> str:
     """Send a text message to multiple users at once (max 500 user IDs).
 
     Args:
