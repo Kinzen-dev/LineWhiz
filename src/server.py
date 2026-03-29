@@ -325,6 +325,23 @@ def create_sse_app() -> Starlette:
             }
         )
 
+    async def handle_server_card(request: Request) -> JSONResponse:
+        """Static server card for Smithery scanning fallback (RFC 9728)."""
+        tools_list = [
+            {
+                "name": t.name,
+                "description": t.description,
+                "inputSchema": t.inputSchema,
+            }
+            for t in TOOL_DEFINITIONS
+        ]
+        return JSONResponse(
+            {
+                "serverInfo": {"name": "linewhiz", "version": "0.1.0"},
+                "tools": tools_list,
+            }
+        )
+
     @asynccontextmanager
     async def lifespan(app: Starlette) -> AsyncIterator[None]:
         """Initialize DB on startup, clean up on shutdown."""
@@ -341,6 +358,7 @@ def create_sse_app() -> Starlette:
         routes=[
             Route("/health", handle_health, methods=["GET"]),
             Route("/.well-known/mcp/server-info", handle_server_info, methods=["GET"]),
+            Route("/.well-known/mcp/server-card.json", handle_server_card, methods=["GET"]),
             Route("/sse", handle_sse),
             Route("/messages/", handle_messages, methods=["POST"]),
         ],
