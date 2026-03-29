@@ -6,7 +6,19 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"
 keywords = ["mcp", "line", "chatbot", "ai", "automation", "line-official-account"]
-
+authors = [
+    { name = "Kinzen", email = "kinzen.dev@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "mcp>=1.2.0",
     "httpx>=0.27.0",
@@ -19,6 +31,11 @@ dependencies = [
     "starlette>=0.37.0",
     "sse-starlette>=2.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Kinzen-dev/LineWhiz"
+Repository = "https://github.com/Kinzen-dev/LineWhiz"
+Issues = "https://github.com/Kinzen-dev/LineWhiz/issues"
 
 [project.scripts]
 linewhiz = "src.server:cli_main"
