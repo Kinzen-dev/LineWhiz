@@ -334,6 +334,9 @@ def create_sse_app() -> Starlette:
         yield
         await close_db()
 
+    from starlette.middleware import Middleware
+    from starlette.middleware.cors import CORSMiddleware
+
     return Starlette(
         routes=[
             Route("/health", handle_health, methods=["GET"]),
@@ -342,6 +345,14 @@ def create_sse_app() -> Starlette:
             Route("/messages/", handle_messages, methods=["POST"]),
         ],
         lifespan=lifespan,
+        middleware=[
+            Middleware(
+                CORSMiddleware,
+                allow_origins=["*"],
+                allow_methods=["*"],
+                allow_headers=["*"],
+            ),
+        ],
     )
 
 
