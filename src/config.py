@@ -23,6 +23,7 @@ class Settings(BaseSettings):
 
     # LineWhiz settings
     linewhiz_tier: Literal["free", "pro", "business"] = "pro"
+    linewhiz_transport: Literal["stdio", "sse"] = "stdio"
     linewhiz_database_url: str = "sqlite:///linewhiz.db"
     linewhiz_log_level: str = "INFO"
 
@@ -46,8 +47,6 @@ def setup_logging() -> logging.Logger:
     logger.setLevel(getattr(logging, settings.linewhiz_log_level.upper(), logging.INFO))
 
     handler = logging.StreamHandler(sys.stderr)
-    handler.setFormatter(
-        logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")
-    )
+    handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s"))
     logger.addHandler(handler)
     return logger
