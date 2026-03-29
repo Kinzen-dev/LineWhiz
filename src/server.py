@@ -315,13 +315,15 @@ def create_sse_app() -> Starlette:
 
     async def handle_server_info(request: Request) -> JSONResponse:
         """MCP server discovery endpoint for Smithery and other registries."""
-        return JSONResponse({
-            "name": "linewhiz",
-            "version": "0.1.0",
-            "description": "Premium MCP server for AI-powered LINE Official Account management",
-            "transport": {"type": "sse", "url": "/sse"},
-            "capabilities": {"tools": True},
-        })
+        return JSONResponse(
+            {
+                "name": "linewhiz",
+                "version": "0.1.0",
+                "description": "Premium MCP server for AI-powered LINE Official Account management",
+                "transport": {"type": "sse", "url": "/sse"},
+                "capabilities": {"tools": True},
+            }
+        )
 
     @asynccontextmanager
     async def lifespan(app: Starlette) -> AsyncIterator[None]:
