@@ -1,0 +1,30 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      LINE_CHANNEL_ACCESS_TOKEN:
+        type: string
+        description: "LINE Messaging API channel access token"
+      LINE_CHANNEL_SECRET:
+        type: string
+        description: "LINE Messaging API channel secret"
+      LINEWHIZ_TIER:
+        type: string
+        enum: ["free", "pro", "business"]
+        default: "pro"
+        description: "Subscription tier (free/pro/business)"
+    required:
+      - LINE_CHANNEL_ACCESS_TOKEN
+      - LINE_CHANNEL_SECRET
+  commandFunction: |-
+    (config) => ({
+      command: "uvx",
+      args: ["linewhiz"],
+      env: {
+        LINE_CHANNEL_ACCESS_TOKEN: config.LINE_CHANNEL_ACCESS_TOKEN,
+        LINE_CHANNEL_SECRET: config.LINE_CHANNEL_SECRET,
+        LINEWHIZ_TIER: config.LINEWHIZ_TIER || "pro",
+        LINEWHIZ_TRANSPORT: "stdio"
+      }
+    })
