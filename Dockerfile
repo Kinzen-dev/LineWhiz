@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # Copy project files
-COPY pyproject.toml ./
+COPY pyproject.toml README.md ./
 COPY src/ ./src/
 
 # Install dependencies (production only)
@@ -37,13 +37,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl \
 
 WORKDIR /app
 
-# Copy installed packages and project from build stage
+# Copy uv + installed packages and project from build stage
+COPY --from=base /usr/local/bin/uv /usr/local/bin/uv
 COPY --from=base /app /app
 
 # Create non-root user + data directory
 RUN useradd --create-home --shell /bin/bash linewhiz \
     && mkdir -p /app/data \
-    && chown -R linewhiz:linewhiz /app/data
+    && chown -R linewhiz:linewhiz /app
 
 USER linewhiz
 
@@ -52,4 +53,4 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
-CMD ["uv", "run", "linewhiz"]
+CMD ["uv", "run", "python", "-m", "src.server"]
